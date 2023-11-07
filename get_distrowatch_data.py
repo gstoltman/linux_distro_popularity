@@ -11,6 +11,8 @@ if not os.path.exists(file_path):
 first_year = 2002
 final_year = 2022
 
+combined_df = pd.DataFrame()
+
 for year in range(first_year, final_year+1):
     url = f'https://distrowatch.com/index.php?dataspan={year}'
     response = requests.get(url, timeout=60)
@@ -39,8 +41,13 @@ for year in range(first_year, final_year+1):
 
     elements_df = pd.DataFrame(elements_list)
 
-    elements_df.to_csv(file_path+f'{year}_export', index=False)
+    elements_df['year'] = year
 
-    print(file_path+f'{year}_export saved successfully')
+    combined_df = pd.concat([combined_df, elements_df])
+
+combined_df.to_csv(file_path+f'all', index=False)
+
+print(file_path+'all_export saved successfully')
+
 
 

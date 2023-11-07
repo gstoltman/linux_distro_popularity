@@ -1,38 +1,43 @@
+from datetime import datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from datetime import datetime, timedelta
-from google.cloud import storage
+from airflow.contrib.operators.gcs_to_bq import GoogleCloudStorageToBigQueryOperator
+from airflow.providers.google.cloud.transfers.local_to_gcs import LocalFilesystemToGCSOperator
+import os
 
-def upload_to_gcp(**kwargs):
-    source_file_path = '/home/space/projects/data_eng/linux_distro_popularity/exports/2002_export.csv'
-    destination_bucket_name = 'ldp-bucket-1'
-    destination_blob_name = "file.csv"
+def upload_to_gcs(export_folder, gcs_path, **kwargs):
+    export_folder = export_folder
+    bucket_name = 'ldp-bucket-1'
+    gcs_conn_id = 'google_cloud_default'
 
-    client = storage.Client()
-    bucket = client.get_bucket(destination_bucket_name)
-    blob = bucket.blob(destination_blob_name)
+    csv_files = [file for file in os.listdir(export_folder)]
 
-    blob.upload_from_filename(source_file_path)
+    for csv_file in csv_files:
+        local_file_path = os.path.join(export_folder, csv_file)
+        gcs_file_path = f"{gcs_path}/{csv_file}"
 
-default_args = {
-    'owner': 'airflow',
-    'depends_on_past': False,
-    'start_date': datetime(2023, 11, 3),
-    'email_on_failure': False,
-    'email_on_retry': False,
-    'retries': 3,
-}
+        upload_task = LocalFilesystemToGCSOperator(
+            task_id = f'upload_to_gcs',
+            src=local_file_path,
+            dst=gcs_file_path,
+            bucket=bucket_name,
+            gcp_conn_id=gcs_conn_id,
+        )
+        upload_task.execute(context=kwargs)
 
 dag = DAG(
-    'send_csvs_to_gcp',
-    default_args=default_args,
+    'upload_files_to_gcs',
+    start_date=datetime(2023, 10, 6),
     schedule_interval=None,
-    dagrun_timeout=timedelta(minutes=60),
+    catchup=False,
 )
 
-t1 = PythonOperator(
-    task_id='send_csvs_to_gcp',
-    python_callable=upload_to_gcp,
+upload_to_gcs = PythonOperator(
+    task_id='upload_to_gcs',
+    python_callable=upload_to_gcs,
+    op_args=['/home/space/projects/data_eng/linux_distro_popularity/exports/', 'ldp/exports'],
     provide_context=True,
     dag=dag,
 )
+
+upload_to_gcs
