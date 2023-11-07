@@ -13,12 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#docker build . \
-#  --pull \
-#  --build-arg BASE_AIRFLOW_IMAGE="apache/airflow:2.7.3" \
-#  --tag ldp-airflow-image:0.0.1
+#docker build . --pull --build-arg BASE_AIRFLOW_IMAGE="apache/airflow:2.7.3" --tag ldp-airflow-image:0.0.7
 
 FROM apache/airflow:2.7.3
+
+ENV AIRFLOW_HOME=/opt/airflow
 
 COPY requirements.txt .
 
@@ -42,10 +41,11 @@ RUN DOWNLOAD_URL="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/goo
        --bash-completion=false \
        --path-update=false \
        --usage-reporting=false \
-       --additional-components alpha beta kubectl \
        --quiet \
     && rm -rf "${TMP_DIR}" \
     && rm -rf "${GCLOUD_HOME}/.install/.backup/" \
     && gcloud --version
 
-USER ${AIRFLOW_UID}
+WORKDIR $AIRFLOW_HOME
+
+USER $AIRFLOW_UID
