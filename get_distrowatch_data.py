@@ -8,7 +8,7 @@ file_path = os.path.join(current_path, 'exports/')
 if not os.path.exists(file_path):
     os.makedirs(file_path)
 
-first_year = 2002
+first_year = 2011
 final_year = 2022
 
 combined_df = pd.DataFrame()
@@ -43,11 +43,10 @@ for year in range(first_year, final_year+1):
 
     elements_df['year'] = year
 
-    combined_df = pd.concat([combined_df, elements_df])
+    combined_df = pd.concat([combined_df, elements_df], ignore_index=True)
 
-combined_df.to_csv(file_path+f'all', index=False)
+combined_df = combined_df.rename(columns={0: 'rank', 1: 'distro', 2: 'hpd'})
 
-print(file_path+'all_export saved successfully')
+combined_df.to_csv(file_path+f'rank_by_years.csv', index=False)
 
-
-
+print(file_path+'rank_by_years.csv saved successfully')
