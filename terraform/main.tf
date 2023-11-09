@@ -15,24 +15,24 @@ provider "google" {
   // credentials = file(var.credentials)  # Use this if you do not want to set env-var GOOGLE_APPLICATION_CREDENTIALS
 }
 
-resource "google_compute_instance" "airflow_vm_instance" {
-  name                      = "ldp-airflow-instance"
-  machine_type              = "e2-standard-4"
-  allow_stopping_for_update = true
-
-  boot_disk {
-    initialize_params {
-      image = var.vm_image
-      size  = 30
-    }
-  }
-
-  network_interface {
-    network = var.network
-    access_config {
-    }
-  }
-}
+# resource "google_compute_instance" "airflow_vm_instance" {
+#   name                      = "ldp-airflow-instance"
+#   machine_type              = "e2-standard-4"
+#   allow_stopping_for_update = true
+# 
+#   boot_disk {
+#     initialize_params {
+#       image = var.vm_image
+#       size  = 30
+#     }
+#   }
+# 
+#   network_interface {
+#     network = var.network
+#     access_config {
+#     }
+#   }
+# }
 
 resource "google_storage_bucket" "bucket" {
   name          = var.bucket
@@ -65,12 +65,4 @@ resource "google_bigquery_dataset" "prod_dataset" {
   delete_contents_on_destroy = true
 }
 
-// Kafka config
-
-// Airflow config
-
-// GCP Bucket config
-
 // GCP Dataproc config
-
-// GCP BigQuery config

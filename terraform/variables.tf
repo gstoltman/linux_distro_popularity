@@ -1,9 +1,5 @@
-locals {
-  data_lake_bucket = "ldp-data-lake"
-}
-
 variable "project" {
-  description = "Your GCP Project ID"
+  description = "linux-distro-popularity"
   type        = string
 }
 
@@ -30,11 +26,11 @@ variable "BQ_DATASET" {
   default = "ldp-bq"
 }
 
-variable "vm_image" {
-  description = "Image for your VM"
-  default     = "ubuntu-os-cloud/ubuntu-2004-lts"
-  type        = string
-}
+# variable "vm_image" {
+#   description = "Image for your VM"
+#   default     = "ubuntu-os-cloud/ubuntu-2004-lts"
+#   type        = string
+# }
 
 variable "network" {
   description = "Network for your instance/cluster"

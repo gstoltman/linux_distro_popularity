@@ -28,7 +28,7 @@ TABLE_NAME = 'rank_by_year'
 
 GCP_PROJECT_ID = os.environ.get('GCP_PROJECT_ID')
 GCP_GCS_BUCKET = os.environ.get('GCP_GCS_BUCKET')
-#BIQQUERY_DATASET = os.environ.get('BIGQUERY_DATASET', '###PLACEHOLDER###')
+BIGQUERY_DATASET = os.environ.get('BIGQUERY_DATASET', 'ldp_stg')
 
 def convert_to_parquet(csv_file, parquet_file):
     if not csv_file.endswith('csv'):
@@ -83,4 +83,19 @@ with DAG(
         bash_command=f'rm {CSV_OUTFILE} {PARQUET_OUTFILE}'
     )
 
-    download_data_file_task >> convert_to_parquet_task >> upload_to_gcs_task >> remove_files_from_local_task
+    create_external_table_task = BigQueryCreateExternalTableOperator(
+        task_id = f'create_external_table',
+        table_resource = {
+            'tableReference': {
+            'projectId': GCP_PROJECT_ID,
+            'datasetId': BIGQUERY_DATASET,
+            'tableId': TABLE_NAME,
+            },
+            'externalDataConfiguration': {
+                'sourceFormat': 'PARQUET',
+                'sourceUris': [f'gs://{GCP_GCS_BUCKET}/{TABLE_NAME}/*.parquet'],
+            },
+        }
+    )
+
+    download_data_file_task >> convert_to_parquet_task >> upload_to_gcs_task >> remove_files_from_local_task >> create_external_table_task
