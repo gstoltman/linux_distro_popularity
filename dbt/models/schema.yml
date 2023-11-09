@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: staging
+    database: linux-distro-popularity
+    schema: ldp_stg
+    tables:
+      - name: rank_by_year
