@@ -10,7 +10,7 @@ The project will intake Linux Distribution page-hit data from Distrowatch and cr
 
 ### Dataset
 
-[Distrowatch](https://distrowatch.com/) is a website that tracks Linux Distros. There is a table that records and ranks Distros based on their hits per day. Using a Python Script, we scrape this back to 2011 and generate the yearly rankings in a .csv file.
+[**Distrowatch**](https://distrowatch.com/) is a website that tracks Linux Distros. There is a table that records and ranks Distros based on their hits per day. Using a Python Script, we scrape this back to 2011 and generate the yearly rankings in a .csv file.
 
 ### Tools & Technologies
 
