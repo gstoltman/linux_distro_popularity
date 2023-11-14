@@ -1,6 +1,6 @@
 # Linux Distro Popularity
 
-A data pipeline with Python Scraping, Docker, Airflow, dbt, Terraform, Looker, and GCP
+A data pipeline with Python Web Scraping, Docker, Airflow, dbt, Terraform, Looker, and GCP
 
 ## Description
 
