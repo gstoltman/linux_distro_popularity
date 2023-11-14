@@ -24,10 +24,10 @@ The project will intake Linux Distribution page-hit data from Distrowatch and cr
 - Data Visualization - [**Data Studio**](https://datastudio.google.com/overview)
 - Language - [**Python**](https://www.python.org)
 
-### Architecture ******PLACEHOLDER******
+### Architecture
 
 ![ldp-architecture](images/architecture.png)
 
-### Final Result ******PLACEHOLDER******
+### Final Result
 
 ![dashboard](images/dashboard.png)
