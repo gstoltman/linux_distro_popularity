@@ -26,7 +26,7 @@ The project will intake Linux Distribution page-hit data from Distrowatch and cr
 
 ### Architecture ******PLACEHOLDER******
 
-![ldp-architecture](images/Streamify-Architecture.jpg)
+![ldp-architecture](images/data-pipeline.png)
 
 ### Final Result ******PLACEHOLDER******
 
