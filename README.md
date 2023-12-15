@@ -17,13 +17,13 @@ The project will intake Linux Distribution page-hit data from Distrowatch and cr
 ### Tools & Technologies
 
 - Cloud - [**Google Cloud Platform**](https://cloud.google.com)
-- Infrastructure as Code software - [**Terraform**](https://www.terraform.io)
+- Infrastructure as Code - [**Terraform**](https://www.terraform.io)
 - Containerization - [**Docker**](https://www.docker.com), [**Docker Compose**](https://docs.docker.com/compose/)
 - Orchestration - [**Airflow**](https://airflow.apache.org)
 - Transformation - [**dbt**](https://www.getdbt.com)
 - Data Lake - [**Google Cloud Storage**](https://cloud.google.com/storage)
 - Data Warehouse - [**BigQuery**](https://cloud.google.com/bigquery)
-- Data Visualization - [**Data Studio**](https://datastudio.google.com/overview)
+- Data Visualization - [**Looker**](https://datastudio.google.com/overview)
 - Language - [**Python**](https://www.python.org)
 
 ### Architecture
